@@ -199,7 +199,7 @@ void ofSetWorkingDirectoryToDefault();
 /// \param root The path to the data/ folder relative to the app executable.
 void ofSetDataPathRoot(const string& root);
 
-
+string ofGetDataPathRoot();
 /// \}
 
 /// \name Vectors

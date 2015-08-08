@@ -983,56 +983,6 @@ public:
 	
 	/// \}
 
-
-	
-    //-----------------------------------------------
-    // this methods are deprecated in 006 please use:
-	/// \cond INTERNAL
-
-    // getScaled
-    OF_DEPRECATED_MSG("Use member method getScaled() instead.", ofVec3f rescaled( const float length ) const);
-	
-    // scale
-    OF_DEPRECATED_MSG("Use member method scale() instead.", ofVec3f& rescale( const float length ));
-	
-    // getRotated
-    OF_DEPRECATED_MSG("Use member method getRotated() instead.", ofVec3f rotated( float angle, const ofVec3f& axis ) const);
-	
-    // getRotated should this be const???
-    OF_DEPRECATED_MSG("Use member method getRotated() instead.", ofVec3f rotated(float ax, float ay, float az));
-	
-    // getNormalized
-    OF_DEPRECATED_MSG("Use member method getNormalized() instead.", ofVec3f normalized() const);
-	
-    // getLimited
-    OF_DEPRECATED_MSG("Use member method getLimited() instead.", ofVec3f limited(float max) const);
-	
-    // getCrossed
-    OF_DEPRECATED_MSG("Use member method getCrossed() instead.", ofVec3f crossed( const ofVec3f& vec ) const);
-	
-    // getPerpendicular
-    OF_DEPRECATED_MSG("Use member method getPerpendicular() instead.", ofVec3f perpendiculared( const ofVec3f& vec ) const);
-    
-    // use getMapped
-    OF_DEPRECATED_MSG("Use member method getMapped() instead.", ofVec3f mapped( const ofVec3f& origin,
-					const ofVec3f& vx,
-					const ofVec3f& vy,
-					const ofVec3f& vz ) const);
-	
-    // use squareDistance
-    OF_DEPRECATED_MSG("Use member method squareDistance() instead.", float  distanceSquared( const ofVec3f& pnt ) const);
-	
-    // use getInterpolated
-    OF_DEPRECATED_MSG("Use member method getInterpolated() instead.", ofVec3f interpolated( const ofVec3f& pnt, float p ) const);
-	
-    // use getMiddle
-    OF_DEPRECATED_MSG("Use member method getMiddle() instead.", ofVec3f middled( const ofVec3f& pnt ) const);
-    
-    // use getRotated
-    OF_DEPRECATED_MSG("Use member method getRotated() instead.", ofVec3f rotated( float angle,
-						const ofVec3f& pivot,
-						const ofVec3f& axis ) const);    
-
     // return all zero vector
     static ofVec3f zero() { return ofVec3f(0, 0, 0); }
     
@@ -1255,18 +1205,12 @@ inline ofVec3f& ofVec3f::operator/=( const float f ) {
 //Scale
 //
 //
-inline ofVec3f ofVec3f::rescaled( const float length ) const {
-	return getScaled(length);
-}
 inline ofVec3f ofVec3f::getScaled( const float length ) const {
 	float l = (float)sqrt(x*x + y*y + z*z);
 	if( l > 0 )
 		return ofVec3f( (x/l)*length, (y/l)*length, (z/l)*length );
 	else
 		return ofVec3f();
-}
-inline ofVec3f& ofVec3f::rescale( const float length ) {
-	return scale(length);
 }
 inline ofVec3f& ofVec3f::scale( const float length ) {
 	float l = (float)sqrt(x*x + y*y + z*z);
@@ -1283,9 +1227,6 @@ inline ofVec3f& ofVec3f::scale( const float length ) {
 // Rotation
 //
 //
-inline ofVec3f ofVec3f::rotated( float angle, const ofVec3f& axis ) const {
-	return getRotated(angle, axis);
-}
 inline ofVec3f ofVec3f::getRotated( float angle, const ofVec3f& axis ) const {
 	ofVec3f ax = axis.getNormalized();
 	float a = (float)(angle*DEG_TO_RAD);
@@ -1364,10 +1305,6 @@ inline ofVec3f& ofVec3f::rotateRad(float angle, const ofVec3f& axis ) {
 }
 
 // const???
-inline ofVec3f ofVec3f::rotated(float ax, float ay, float az) {
-	return getRotated(ax,ay,az);
-}
-
 inline ofVec3f ofVec3f::getRotated(float ax, float ay, float az) const {
 	float a = (float)cos(DEG_TO_RAD*(ax));
 	float b = (float)sin(DEG_TO_RAD*(ax));
@@ -1436,12 +1373,6 @@ inline ofVec3f& ofVec3f::rotateRad(float ax, float ay, float az) {
 // Rotate point by angle (deg) around line defined by pivot and axis.
 //
 //
-inline ofVec3f ofVec3f::rotated( float angle,
-								const ofVec3f& pivot,
-								const ofVec3f& axis ) const{
-	return getRotated(angle, pivot, axis);
-}
-
 inline ofVec3f ofVec3f::getRotated( float angle,
 								   const ofVec3f& pivot,
 								   const ofVec3f& axis ) const
@@ -1569,13 +1500,6 @@ inline ofVec3f& ofVec3f::rotateRad( float angle,
 // Map point to coordinate system defined by origin, vx, vy, and vz.
 //
 //
-inline ofVec3f ofVec3f::mapped( const ofVec3f& origin,
-							   const ofVec3f& vx,
-							   const ofVec3f& vy,
-							   const ofVec3f& vz ) const{
-	return getMapped(origin, vx, vy, vz);
-}
-
 inline ofVec3f ofVec3f::getMapped( const ofVec3f& origin,
 								  const ofVec3f& vx,
 								  const ofVec3f& vy,
@@ -1610,10 +1534,6 @@ inline float ofVec3f::distance( const ofVec3f& pnt) const {
 	return (float)sqrt(vx*vx + vy*vy + vz*vz);
 }
 
-inline float  ofVec3f::distanceSquared( const ofVec3f& pnt ) const{
-	return squareDistance(pnt);
-}
-
 inline float  ofVec3f::squareDistance( const ofVec3f& pnt ) const {
 	float vx = x-pnt.x;
 	float vy = y-pnt.y;
@@ -1630,11 +1550,6 @@ inline float  ofVec3f::squareDistance( const ofVec3f& pnt ) const {
  * p==0.0 results in this point, p==0.5 results in the
  * midpoint, and p==1.0 results in pnt being returned.
  */
-
-inline ofVec3f ofVec3f::interpolated( const ofVec3f& pnt, float p ) const {
-	return getInterpolated(pnt,p);
-}
-
 inline ofVec3f ofVec3f::getInterpolated( const ofVec3f& pnt, float p ) const {
 	return ofVec3f( x*(1-p) + pnt.x*p,
 				   y*(1-p) + pnt.y*p,
@@ -1646,11 +1561,6 @@ inline ofVec3f& ofVec3f::interpolate( const ofVec3f& pnt, float p ) {
 	y = y*(1-p) + pnt.y*p;
 	z = z*(1-p) + pnt.z*p;
 	return *this;
-}
-
-
-inline ofVec3f ofVec3f::middled( const ofVec3f& pnt ) const {
-	return getMiddle(pnt);
 }
 
 inline ofVec3f ofVec3f::getMiddle( const ofVec3f& pnt ) const {
@@ -1689,10 +1599,6 @@ inline ofVec3f& ofVec3f::average( const ofVec3f* points, int num ) {
 // Normalization
 //
 //
-inline ofVec3f ofVec3f::normalized() const {
-	return getNormalized();
-}
-
 inline ofVec3f ofVec3f::getNormalized() const {
 	float length = (float)sqrt(x*x + y*y + z*z);
 	if( length > 0 ) {
@@ -1717,11 +1623,6 @@ inline ofVec3f& ofVec3f::normalize() {
 // Limit length.
 //
 //
-
-inline ofVec3f ofVec3f::limited(float max) const {
-	return getLimited(max);
-}
-
 inline ofVec3f ofVec3f::getLimited(float max) const {
     ofVec3f limited;
     float lengthSquared = (x*x + y*y + z*z);
@@ -1749,9 +1650,6 @@ inline ofVec3f& ofVec3f::limit(float max) {
 // Perpendicular vector.
 //
 //
-inline ofVec3f ofVec3f::crossed( const ofVec3f& vec ) const {
-	return getCrossed(vec);
-}
 inline ofVec3f ofVec3f::getCrossed( const ofVec3f& vec ) const {
 	return ofVec3f( y*vec.z - z*vec.y,
 				   z*vec.x - x*vec.z,
@@ -1770,10 +1668,6 @@ inline ofVec3f& ofVec3f::cross( const ofVec3f& vec ) {
 /**
  * Normalized perpendicular.
  */
-inline ofVec3f ofVec3f::perpendiculared( const ofVec3f& vec ) const {
-	return getPerpendicular(vec);
-}
-
 inline ofVec3f ofVec3f::getPerpendicular( const ofVec3f& vec ) const {
 	float crossX = y*vec.z - z*vec.y;
 	float crossY = z*vec.x - x*vec.z;

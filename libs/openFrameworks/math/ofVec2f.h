@@ -918,45 +918,6 @@ public:
 	
 	/// \}
 
-
-
-    //---------------------------------------------------
-    // this methods are deprecated in 006 please dont use:
-	/// \cond INTERNAL
-
-    // getScaled
-    OF_DEPRECATED_MSG("Use member method getScaled() instead.", ofVec2f rescaled( const float length ) const);
-	
-    // scale
-    OF_DEPRECATED_MSG("Use member method scale() instead.", ofVec2f& rescale( const float length ));
-	
-    // getRotated
-    OF_DEPRECATED_MSG("Use member method getRotated() instead.", ofVec2f rotated( float angle ) const);
-	
-    // getNormalized
-    OF_DEPRECATED_MSG("Use member method getNormalized() instead.", ofVec2f normalized() const);
-	
-    // getLimited
-    OF_DEPRECATED_MSG("Use member method getLimited() instead.", ofVec2f limited(float max) const);
-	
-    // getPerpendicular
-    OF_DEPRECATED_MSG("Use member method getPerpendicular() instead.", ofVec2f perpendiculared() const);
-	
-    // getInterpolated
-    OF_DEPRECATED_MSG("Use member method getInterpolated() instead.", ofVec2f interpolated( const ofVec2f& pnt, float p ) const);
-    
-    // getMiddled
-    OF_DEPRECATED_MSG("Use member method getMiddled() instead.", ofVec2f middled( const ofVec2f& pnt ) const);
-    
-    // getMapped 
-    OF_DEPRECATED_MSG("Use member method getMapped() instead.", ofVec2f mapped( const ofVec2f& origin, const ofVec2f& vx, const ofVec2f& vy ) const);
-    
-    // squareDistance
-    OF_DEPRECATED_MSG("Use member method squareDistance() instead.", float distanceSquared( const ofVec2f& pnt ) const);
-    
-    // use getRotated
-    OF_DEPRECATED_MSG("Use member method getRotated() instead.", ofVec2f rotated( float angle, const ofVec2f& pivot ) const);    
-    
     // return all zero vector
     static ofVec2f zero() { return ofVec2f(0, 0); }
 
@@ -1159,20 +1120,12 @@ inline ofVec2f& ofVec2f::operator/=( const float f ) {
 	return *this;
 }
 
-inline ofVec2f ofVec2f::rescaled( const float length ) const {
-	return getScaled(length);
-}
-
 inline ofVec2f ofVec2f::getScaled( const float length ) const {
 	float l = (float)sqrt(x*x + y*y);
 	if( l > 0 )
 		return ofVec2f( (x/l)*length, (y/l)*length );
 	else
 		return ofVec2f();
-}
-
-inline ofVec2f& ofVec2f::rescale( const float length ){
-	return scale(length);
 }
 
 inline ofVec2f& ofVec2f::scale( const float length ) {
@@ -1189,10 +1142,6 @@ inline ofVec2f& ofVec2f::scale( const float length ) {
 // Rotation
 //
 //
-inline ofVec2f ofVec2f::rotated( float angle ) const {
-	return getRotated(angle);
-}
-
 inline ofVec2f ofVec2f::getRotated( float angle ) const {
 	float a = (float)(angle*DEG_TO_RAD);
 	return ofVec2f( x*cos(a) - y*sin(a),
@@ -1226,12 +1175,6 @@ inline ofVec2f& ofVec2f::rotateRad( float angle ) {
 // Rotate point by angle (deg) around pivot point.
 //
 //
-
-// This method is deprecated in 006 please use getRotated instead
-inline ofVec2f ofVec2f::rotated( float angle, const ofVec2f& pivot ) const {
-	return getRotated(angle, pivot);
-}
-
 inline ofVec2f ofVec2f::getRotated( float angle, const ofVec2f& pivot ) const {
 	float a = (float)(angle * DEG_TO_RAD);
 	return ofVec2f( ((x-pivot.x)*cos(a) - (y-pivot.y)*sin(a)) + pivot.x,
@@ -1265,14 +1208,6 @@ inline ofVec2f& ofVec2f::rotateRad( float angle, const ofVec2f& pivot ) {
 // Map point to coordinate system defined by origin, vx, and vy.
 //
 //
-
-// This method is deprecated in 006 please use getMapped instead
-inline ofVec2f ofVec2f::mapped( const ofVec2f& origin,
-							   const ofVec2f& vx,
-							   const ofVec2f& vy ) const{
-	return getMapped(origin, vx, vy);
-}
-
 inline ofVec2f ofVec2f::getMapped( const ofVec2f& origin,
 								  const ofVec2f& vx,
 								  const ofVec2f& vy ) const
@@ -1300,11 +1235,6 @@ inline float ofVec2f::distance( const ofVec2f& pnt) const {
 	return (float)sqrt(vx*vx + vy*vy);
 }
 
-//this method is deprecated in 006 please use squareDistance
-inline float ofVec2f::distanceSquared( const ofVec2f& pnt ) const {
-	return squareDistance(pnt);
-}
-
 inline float ofVec2f::squareDistance( const ofVec2f& pnt ) const {
 	float vx = x-pnt.x;
 	float vy = y-pnt.y;
@@ -1321,11 +1251,6 @@ inline float ofVec2f::squareDistance( const ofVec2f& pnt ) const {
 // midpoint, and p==1.0 results in pnt being returned.
 //
 
-// this method is deprecated in 006 please use getInterpolated
-inline ofVec2f ofVec2f::interpolated( const ofVec2f& pnt, float p ) const{
-	return getInterpolated(pnt, p);
-}
-
 inline ofVec2f ofVec2f::getInterpolated( const ofVec2f& pnt, float p ) const {
 	return ofVec2f( x*(1-p) + pnt.x*p, y*(1-p) + pnt.y*p );
 }
@@ -1334,11 +1259,6 @@ inline ofVec2f& ofVec2f::interpolate( const ofVec2f& pnt, float p ) {
 	x = x*(1-p) + pnt.x*p;
 	y = y*(1-p) + pnt.y*p;
 	return *this;
-}
-
-// this method is deprecated in 006 please use getMiddle
-inline ofVec2f ofVec2f::middled( const ofVec2f& pnt ) const{
-	return getMiddle(pnt);
 }
 
 inline ofVec2f ofVec2f::getMiddle( const ofVec2f& pnt ) const {
@@ -1372,10 +1292,6 @@ inline ofVec2f& ofVec2f::average( const ofVec2f* points, int num ) {
 // Normalization
 //
 //
-inline ofVec2f ofVec2f::normalized() const {
-	return getNormalized();
-}
-
 inline ofVec2f ofVec2f::getNormalized() const {
 	float length = (float)sqrt(x*x + y*y);
 	if( length > 0 ) {
@@ -1399,10 +1315,6 @@ inline ofVec2f& ofVec2f::normalize() {
 // Limit length.
 //
 //
-inline ofVec2f ofVec2f::limited(float max) const{
-	return getLimited(max);
-}
-
 inline ofVec2f ofVec2f::getLimited(float max) const {
     ofVec2f limited;
     float lengthSquared = (x*x + y*y);
@@ -1430,10 +1342,6 @@ inline ofVec2f& ofVec2f::limit(float max) {
 // Perpendicular normalized vector.
 //
 //
-inline ofVec2f ofVec2f::perpendiculared() const {
-	return getPerpendicular();
-}
-
 inline ofVec2f ofVec2f::getPerpendicular() const {
 	float length = (float)sqrt( x*x + y*y );
 	if( length > 0 )

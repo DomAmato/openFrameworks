@@ -229,34 +229,6 @@ public:
     float dot( const ofVec4f& vec ) const;
 		
 	/// \}
-
-	
-	
-	
-    //---------------------------------------
-    // this methods are deprecated in 006 please use:
-	/// \cond INTERNAL
-	
-    // getScaled
-    OF_DEPRECATED_MSG("Use member method getScaled() instead.", ofVec4f rescaled( const float length ) const);
-	
-    // scale
-    OF_DEPRECATED_MSG("Use member method scale() instead.", ofVec4f& rescale( const float length ));
-	
-    // getNormalized
-    OF_DEPRECATED_MSG("Use member method getNormalized() instead.", ofVec4f normalized() const);
-	
-    // getLimited
-    OF_DEPRECATED_MSG("Use member method getLimited() instead.", ofVec4f limited(float max) const);
-	
-    // use squareDistance
-    OF_DEPRECATED_MSG("Use member method squareDistance() instead.", float  distanceSquared( const ofVec4f& pnt ) const);
-	
-    // use getInterpolated
-    OF_DEPRECATED_MSG("Use member method getInterpolated() instead.", ofVec4f interpolated( const ofVec4f& pnt, float p ) const);
-	
-    // use getMiddle
-    OF_DEPRECATED_MSG("Use member method getMiddle() instead.", ofVec4f middled( const ofVec4f& pnt ) const);
     
     // return all zero vector
     static ofVec4f zero() { return ofVec4f(0, 0, 0, 0); }
@@ -470,10 +442,6 @@ inline istream& operator>>(istream& is, ofVec4f& vec) {
 }
 
 
-inline ofVec4f ofVec4f::rescaled( const float length ) const {
-	return getScaled(length);
-}
-
 inline ofVec4f ofVec4f::getScaled( const float length ) const {
 	float l = (float)sqrt(x*x + y*y + z*z + w*w);
 	if( l > 0 )
@@ -481,10 +449,6 @@ inline ofVec4f ofVec4f::getScaled( const float length ) const {
 					   (z/l)*length, (w/l)*length );
 	else
 		return ofVec4f();
-}
-
-inline ofVec4f& ofVec4f::rescale( const float length ) {
-	return scale(length);
 }
 
 inline ofVec4f& ofVec4f::scale( const float length ) {
@@ -511,10 +475,6 @@ inline float ofVec4f::distance( const ofVec4f& pnt) const {
 	return (float)sqrt( vx*vx + vy*vy + vz*vz + vw*vw );
 }
 
-inline float ofVec4f::distanceSquared( const ofVec4f& pnt ) const {
-	return squareDistance(pnt);
-}
-
 inline float ofVec4f::squareDistance( const ofVec4f& pnt ) const {
 	float vx = x-pnt.x;
 	float vy = y-pnt.y;
@@ -532,9 +492,6 @@ inline float ofVec4f::squareDistance( const ofVec4f& pnt ) const {
  * p==0.0 results in this point, p==0.5 results in the
  * midpoint, and p==1.0 results in pnt being returned.
  */
-inline ofVec4f ofVec4f::interpolated( const ofVec4f& pnt, float p ) const{
-	return getInterpolated(pnt,p);
-}
 
 inline ofVec4f ofVec4f::getInterpolated( const ofVec4f& pnt, float p ) const {
 	return ofVec4f( x*(1-p) + pnt.x*p,
@@ -551,9 +508,6 @@ inline ofVec4f& ofVec4f::interpolate( const ofVec4f& pnt, float p ) {
 	return *this;
 }
 
-inline ofVec4f ofVec4f::middled( const ofVec4f& pnt ) const {
-	return getMiddle(pnt);
-}
 
 inline ofVec4f ofVec4f::getMiddle( const ofVec4f& pnt ) const {
 	return ofVec4f( (x+pnt.x)/2.0f, (y+pnt.y)/2.0f,
@@ -596,10 +550,6 @@ inline ofVec4f& ofVec4f::average( const ofVec4f* points, int num ) {
 // Normalization
 //
 //
-inline ofVec4f ofVec4f::normalized() const {
-	return getNormalized();
-}
-
 inline ofVec4f ofVec4f::getNormalized() const {
 	float length = (float)sqrt(x*x + y*y + z*z + w*w);
 	if( length > 0 ) {
@@ -625,10 +575,6 @@ inline ofVec4f& ofVec4f::normalize() {
 // Limit length.
 //
 //
-inline ofVec4f ofVec4f::limited(float max) const {
-	return getLimited(max);
-}
-
 inline ofVec4f ofVec4f::getLimited(float max) const {
     ofVec4f limited;
     float lengthSquared = (x*x + y*y + z*z + w*w);

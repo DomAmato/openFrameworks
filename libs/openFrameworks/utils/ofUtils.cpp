@@ -315,6 +315,11 @@ void ofSetDataPathRoot(const string& newRoot){
 }
 
 //--------------------------------------------------
+string ofGetDataPathRoot() {
+	return dataPathRoot().string();
+}
+
+//--------------------------------------------------
 string ofToDataPath(const string& path, bool makeAbsolute){
 	if (!enableDataPath)
 		return path;

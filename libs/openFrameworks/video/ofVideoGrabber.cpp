@@ -76,11 +76,6 @@ bool ofVideoGrabber::setup(int w, int h, bool setUseTexture){
 }
 
 //--------------------------------------------------------------------
-bool ofVideoGrabber::initGrabber(int w, int h, bool setUseTexture){
-	return setup(w,h,setUseTexture);
-}
-
-//--------------------------------------------------------------------
 bool ofVideoGrabber::setPixelFormat(ofPixelFormat pixelFormat) {
 	if(grabber){
 		if( grabber->isInitialized() ){
@@ -151,16 +146,6 @@ const ofPixels & ofVideoGrabber::getPixels() const{
 	return getGrabber()->getPixels();
 }
 
-//---------------------------------------------------------------------------
-ofPixels& ofVideoGrabber::getPixelsRef(){
-	return getGrabber()->getPixels();
-}
-
-//---------------------------------------------------------------------------
-const ofPixels& ofVideoGrabber::getPixelsRef() const{
-	return getGrabber()->getPixels();
-}
-
 //------------------------------------
 ofTexture & ofVideoGrabber::getTexture(){
 	if(grabber->getTexturePtr() == nullptr){
@@ -179,16 +164,6 @@ const ofTexture & ofVideoGrabber::getTexture() const{
 	else{
 		return *grabber->getTexturePtr();
 	}
-}
-
-//------------------------------------
-ofTexture & ofVideoGrabber::getTextureReference(){
-	return getTexture();
-}
-
-//------------------------------------
-const ofTexture & ofVideoGrabber::getTextureReference() const{
-	return getTexture();
 }
 
 //------------------------------------

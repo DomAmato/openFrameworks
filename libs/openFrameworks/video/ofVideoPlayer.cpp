@@ -107,11 +107,6 @@ void ofVideoPlayer::loadAsync(string name){
 }
 
 //---------------------------------------------------------------------------
-bool ofVideoPlayer::loadMovie(string name){
-	return load(name);
-}
-
-//---------------------------------------------------------------------------
 string ofVideoPlayer::getMoviePath() const{
     return moviePath;	
 }
@@ -123,16 +118,6 @@ ofPixels & ofVideoPlayer::getPixels(){
 
 //---------------------------------------------------------------------------
 const ofPixels&	ofVideoPlayer::getPixels() const{
-	return getPlayer()->getPixels();
-}
-
-//---------------------------------------------------------------------------
-ofPixels& ofVideoPlayer::getPixelsRef(){
-	return getPlayer()->getPixels();
-}
-
-//---------------------------------------------------------------------------
-const ofPixels& ofVideoPlayer::getPixelsRef() const{
 	return getPlayer()->getPixels();
 }
 
@@ -152,16 +137,6 @@ const ofTexture & ofVideoPlayer::getTexture() const{
 	}else{
 		return *playerTex;
 	}
-}
-
-//---------------------------------------------------------------------------
-ofTexture & ofVideoPlayer::getTextureReference(){
-	return getTexture();
-}
-
-//---------------------------------------------------------------------------
-const ofTexture & ofVideoPlayer::getTextureReference() const{
-	return getTexture();
 }
 
 //---------------------------------------------------------------------------

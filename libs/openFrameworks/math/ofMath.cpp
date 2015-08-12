@@ -6,8 +6,12 @@
 	#include <sys/time.h>
 #endif
 
+#include <random> 
 #include "ofNoise.h"
 #include "ofPolyline.h"
+
+static std::default_random_engine generator;
+static std::normal_distribution<float> distribution(0, 1);
 
 //--------------------------------------------------
 int ofNextPow2(int a){
@@ -64,6 +68,16 @@ float ofRandomf() {
 //--------------------------------------------------
 float ofRandomuf() {
 	return (rand() / float(RAND_MAX)) * (1.0f - std::numeric_limits<float>::epsilon());
+}
+
+float ofRandomGaussian(float mean, float stddev) {
+	std::normal_distribution<float>::param_type _param(mean, stddev);
+	distribution.param(_param);
+	return distribution(generator);
+}
+
+float ofRandomGaussian() {
+	return distribution(generator);
 }
 
 //---- new to 006

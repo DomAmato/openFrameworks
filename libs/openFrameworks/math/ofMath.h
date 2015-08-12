@@ -105,6 +105,9 @@ void ofSeedRandom();
 /// \param val The value with which to seed the generator.
 void ofSeedRandom(int val);
 
+float ofRandomGaussian(float mean, float stddev);
+float ofRandomGaussian();
+
 /// \}
 
 /// \name Number Ranges

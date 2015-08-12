@@ -18,18 +18,7 @@ function download() {
 
 # prepare the build environment, executed inside the lib src dir
 function prepare() {
-	echo "The current working directory: $PWD"
-	# remove uneeded makefiles
-	rm src/CMakeLists.txt
-	rm src/libfreenect.pc.in
-
-	# we dont need freenect audio
-	rm include/libfreenect-audio.h
-	rm src/audio.c
-	rm src/loader.c
-
-	# no python either
-	rm src/fwfetcher.py
+	echo "nothing to prepare"
 }
 
 # executed inside the lib src dir
@@ -56,7 +45,8 @@ function copy() {
 	cp -Rv include/* $1/include
 
 	# copy sources
-	cp -Rv src/* $1/src
+	cp -Rv src/*.c $1/src
+	cp -Rv src/*.h $1/src
 
 	# copy platform specfic stuff
 	cp -Rv platform/linux $1/platform

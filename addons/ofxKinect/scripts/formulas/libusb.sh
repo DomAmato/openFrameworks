@@ -67,6 +67,9 @@ function copy() {
 	cp -v libusb/lib/msvc/libusb.lib $1/lib/vs/Win32
 	cp -v libusb/lib/msvc_x64/libusb.lib $1/lib/vs/x64
 	cp -v libusb/lib/msvc/libusb.lib $1/lib/win_cb
+	
+	cp -v libusb/bin/amd64/libusb0.dll ../../../export/vs/x64/
+	cp -v libusb/bin/x86/libusb0_x86.dll ../../../export/vs/x64/libusb0.dll
 }
 
 # executed inside the lib src dir

@@ -10,11 +10,17 @@
 #include "ofNoise.h"
 #include "ofPolyline.h"
 
+#if HAS_TLS
+static thread_local std::default_random_engine generator;
+static thread_local std::normal_distribution<float> nDistribution(0, 1);
+static thread_local std::uniform_real_distribution<float> ufDistribution(-1.0, 1.0);
+static thread_local std::uniform_int_distribution<int> uiDistribution(-100, 100);
+#else
 static std::default_random_engine generator;
 static std::normal_distribution<float> nDistribution(0, 1);
 static std::uniform_real_distribution<float> ufDistribution(-1.0, 1.0);
 static std::uniform_int_distribution<int> uiDistribution(-100, 100);
-
+#endif
 //--------------------------------------------------
 int ofNextPow2(int a){
 	// from nehe.gamedev.net lesson 43
@@ -56,8 +62,10 @@ void ofSeedRandom(int val) {
 
 //--------------------------------------------------
 float ofRandom(float max) {
-	std::uniform_real_distribution<float>::param_type _param(0, max);
-	ufDistribution.param(_param);
+	if (ufDistribution.max() != max || uiDistribution.min() != 0) {
+		std::uniform_real_distribution<float>::param_type _param(0, max);
+		ufDistribution.param(_param);
+	}
 	return ufDistribution(generator);
 	//return (max * rand() / float(RAND_MAX)) * (1.0f - std::numeric_limits<float>::epsilon());
 }
@@ -66,24 +74,30 @@ float ofRandom(float max) {
 float ofRandom(float x, float y) {
 	float high = MAX(x, y);
 	float low = MIN(x, y);
-	std::uniform_real_distribution<float>::param_type _param(low, high);
-	ufDistribution.param(_param);
+	if (ufDistribution.max() != high || uiDistribution.min() != low) {
+		std::uniform_real_distribution<float>::param_type _param(low, high);
+		ufDistribution.param(_param);
+	}
 	return ufDistribution(generator);
 	//return max(low, (low + ((high - low) * rand() / float(RAND_MAX))) * (1.0f - std::numeric_limits<float>::epsilon()));
 }
 
 //--------------------------------------------------
 float ofRandomf() {
-	std::uniform_real_distribution<float>::param_type _param(-1, 1);
-	ufDistribution.param(_param);
+	if (ufDistribution.max() != 1 || uiDistribution.min() != -1) {
+		std::uniform_real_distribution<float>::param_type _param(-1, 1);
+		ufDistribution.param(_param);
+	}
 	return ufDistribution(generator);
 	//return -1.0f + (2.0f * rand() / float(RAND_MAX)) * (1.0f - std::numeric_limits<float>::epsilon());
 }
 
 //--------------------------------------------------
 float ofRandomuf() {
-	std::uniform_real_distribution<float>::param_type _param(0, 1);
-	ufDistribution.param(_param);
+	if (ufDistribution.max() != 1 || uiDistribution.min() != 0) {
+		std::uniform_real_distribution<float>::param_type _param(0, 1);
+		ufDistribution.param(_param);
+	}
 	return ufDistribution(generator);
 	//return (rand() / float(RAND_MAX)) * (1.0f - std::numeric_limits<float>::epsilon());
 }
@@ -93,22 +107,29 @@ int ofRandomi() {
 }
 
 int ofRandomi(int max) {
-	std::uniform_int_distribution<int>::param_type _param(0, max);
-	uiDistribution.param(_param);
+	if (uiDistribution.max() != max || uiDistribution.min() != 0) {
+		std::uniform_int_distribution<int>::param_type _param(0, max);
+		uiDistribution.param(_param);
+	}
 	return uiDistribution(generator);
 }
 
-float ofRandom(int x, int y) {
+float ofRandomi(int x, int y) {
+	
 	int high = MAX(x, y);
 	int low = MIN(x, y);
-	std::uniform_int_distribution<int>::param_type _param(low, high);
-	uiDistribution.param(_param);
+	if (uiDistribution.max() != high || uiDistribution.min() != low) {
+		std::uniform_int_distribution<int>::param_type _param(low, high);
+		uiDistribution.param(_param);
+	}
 	return uiDistribution(generator);
 }
 
 float ofRandomGaussian(float mean, float stddev) {
-	std::normal_distribution<float>::param_type _param(mean, stddev);
-	nDistribution.param(_param);
+	if (nDistribution.mean() != mean || nDistribution.stddev() != stddev) {
+		std::normal_distribution<float>::param_type _param(mean, stddev);
+		nDistribution.param(_param);
+	}
 	return nDistribution(generator);
 }
 

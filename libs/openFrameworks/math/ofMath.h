@@ -107,7 +107,7 @@ void ofSeedRandom(int val);
 
 int ofRandomi();
 int ofRandomi(int max);
-float ofRandom(int val0, int val1);
+float ofRandomi(int val0, int val1);
 
 float ofRandomGaussian(float mean, float stddev);
 float ofRandomGaussian();

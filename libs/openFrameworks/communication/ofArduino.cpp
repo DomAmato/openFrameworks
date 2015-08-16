@@ -992,7 +992,7 @@ void  ofArduino::sendStepper4Wire(int pin1, int pin2, int pin3, int pin4, int st
 void ofArduino::sendStepperMove(int stepperID, int direction, int numSteps, int speed, float acceleration, float deceleration) {
 
 	if (stepperID <= _numSteppers && stepperID >= 0) {
-		unsigned char steps[3] = { abs(numSteps) & 0x0000007F, (abs(numSteps) >> 7) & 0x0000007F, (abs(numSteps) >> 14) & 0x0000007F };
+		unsigned char steps[3] = { static_cast<unsigned char>(abs(numSteps) & 0x0000007F), static_cast<unsigned char>((abs(numSteps) >> 7) & 0x0000007F), static_cast<unsigned char>((abs(numSteps) >> 14) & 0x0000007F) };
 
 		// the stepper interface expects decimal expressed an an integer
 		if (acceleration != 0 && deceleration != 0) {
